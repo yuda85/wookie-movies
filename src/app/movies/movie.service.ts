@@ -5,7 +5,11 @@ import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngxs/store';
 import { MoviesStateSelectors } from '../state/movies/movies.selectors';
 import { filter, map, take, tap } from 'rxjs/operators';
-import { SetMovies } from '../state/movies/movies.actions';
+import {
+  SetMovies,
+  SetMoviesByGenre,
+  SetSearchResults,
+} from '../state/movies/movies.actions';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -46,13 +50,24 @@ export class MovieService {
         return data['movies'];
       }),
       tap((data) => {
+        let moviesByGenre: { [key: string]: IMovie[] } = {};
         this.store.dispatch(new SetMovies(data));
+
+        data.forEach((movie) => {
+          movie.genres.forEach((genre) => {
+            if (moviesByGenre[genre] && moviesByGenre[genre].length) {
+              moviesByGenre[genre].push(movie);
+            } else {
+              moviesByGenre[genre] = [movie];
+            }
+          });
+        });
+        this.setMoviesByGenre(moviesByGenre);
       })
     );
   }
 
   public getMovieBySlug(slug: string): Observable<IMovie> {
-    // return this.store.select(MoviesStateSelectors.movieBySlug(slug));
     return this.store.select(MoviesStateSelectors.movies).pipe(
       map((movies) => {
         const movie = movies.find((movie) => {
@@ -75,7 +90,7 @@ export class MovieService {
   }
 
   public getSerchResults(): Observable<IMovie[]> {
-    return this.searchSubject$.asObservable();
+    return this.store.select(MoviesStateSelectors.searchResults);
   }
 
   public searchMovie(text: string): void {
@@ -93,20 +108,24 @@ export class MovieService {
           take(1)
         )
         .subscribe((data) => {
-          this.searchSubject$.next(data);
           this.handleRoutingAfterSerch(data);
+          this.store.dispatch(new SetSearchResults(data));
         });
     } else {
-      this.searchSubject$.next(movies);
       this.handleRoutingAfterSerch(movies);
+      this.store.dispatch(new SetSearchResults(movies));
     }
   }
-  public setMoviesByGenre(movies: { [key: string]: IMovie[] }) {}
+  public setMoviesByGenre(movies: { [key: string]: IMovie[] }) {
+    this.store.dispatch(new SetMoviesByGenre(movies));
+  }
 
-  public getMoviesbyGenre(
-    genre: string
-  ): Observable<{ [key: string]: IMovie[] }> {
-    return;
+  public getMoviesbyGenre(genre: string): Observable<IMovie[]> {
+    return this.store.select(MoviesStateSelectors.moviesByGenre).pipe(
+      map((data) => {
+        return data[genre];
+      })
+    );
   }
 
   private searchMovieOnServer(serchterm: string): Observable<IMovie[]> {
@@ -114,6 +133,8 @@ export class MovieService {
     return this.httpService.get(`${this.searchUrl}serchterm`, { headers }).pipe(
       filter((data) => !!data),
       map((data) => {
+        if (!data['movies']) {
+        }
         return data['movies'];
       })
     );

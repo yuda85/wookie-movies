@@ -1,1 +1,5 @@
-<p>search-results works!</p>
+<mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+<div class="search-results" *ngIf="movies$ | async as movies">
+  <h1>Search</h1>
+  <app-movie-slider [movies]="movies"></app-movie-slider>
+</div>

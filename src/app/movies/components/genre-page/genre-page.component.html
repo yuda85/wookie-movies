@@ -1,3 +1,4 @@
-<div class="genre-page">
-  <app-movie-slider movies="movies"></app-movie-slider>
+<div class="genre-page" *ngIf="movies$ | async as movies">
+  <h1>{{ genre }}</h1>
+  <app-movie-slider [movies]="movies"></app-movie-slider>
 </div>

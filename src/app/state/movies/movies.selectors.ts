@@ -8,4 +8,14 @@ export class MoviesStateSelectors {
   static movies(state: MoviesStateModel): IMovie[] {
     return state.movies;
   }
+
+  @Selector([MoviesState])
+  static moviesByGenre(state: MoviesStateModel): { [key: string]: IMovie[] } {
+    return state.moviesByGenre;
+  }
+
+  @Selector([MoviesState])
+  static searchResults(state: MoviesStateModel): IMovie[] {
+    return state.searchResults;
+  }
 }

@@ -22,7 +22,6 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     MoviesRoutingModule,
     BrowserAnimationsModule,
-    AngularFireModule.initializeApp(environment.firebase),
     MaterialModule,
     SwiperModule,
     NgxsModule.forRoot(AppState),
