@@ -1,3 +1,15 @@
 @import "./styles/global";
 @import "./styles/variables";
 @import "~swiper/swiper-bundle";
+
+.app {
+  &__github {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 3;
+    img {
+      width: 3rem;
+    }
+  }
+}
