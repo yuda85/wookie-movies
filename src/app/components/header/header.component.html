@@ -1,0 +1,39 @@
+<div class="header">
+  <mat-toolbar color="asscend">
+    <div class="header__inner">
+      <div class="header__left">
+        <button
+          mat-icon-button
+          class="example-icon"
+          aria-label="Example icon-button with menu icon"
+        >
+          <img
+            class="header__logo"
+            src="../../../assets/images/wookie.webp"
+            alt=""
+          />
+        </button>
+        <span>Wookie Movies</span>
+      </div>
+      <div class="header__right">
+        <div class="header__search">
+          <mat-form-field appearance="standard">
+            <mat-label>Search Movie</mat-label>
+            <input matInput placeholder="i.e Pulp Fiction" />
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+        </div>
+        <button
+          mat-raised-button
+          *ngIf="!(isUserLoggedIn | async); else loggedIn"
+          (click)="login()"
+        >
+          Login
+        </button>
+        <ng-template #loggedIn>
+          <button (click)="logout()" mat-raised-button>Logout</button>
+        </ng-template>
+      </div>
+    </div>
+  </mat-toolbar>
+</div>
