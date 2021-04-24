@@ -11,6 +11,9 @@ import { MaterialModule } from './material/material.module';
 import { HeaderComponent } from './components/header/header.component';
 import { SwiperModule } from 'swiper/angular';
 import { MoviesRoutingModule } from './movies/movies-routing.module';
+import { NgxsModule } from '@ngxs/store';
+import { AppState } from './state/app-state';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
@@ -22,6 +25,8 @@ import { MoviesRoutingModule } from './movies/movies-routing.module';
     AngularFireModule.initializeApp(environment.firebase),
     MaterialModule,
     SwiperModule,
+    NgxsModule.forRoot(AppState),
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,1 +1,45 @@
-<p>movie works!</p>
+<div class="movie" *ngIf="movie$ | async as movie">
+  <div class="movie__wrap">
+    <div class="movie__poster">
+      <img src="{{ movie.poster }}" alt="{{ movie.title }}" />
+    </div>
+    <div class="movie__details">
+      <div class="movie__rating">
+        <app-star-rating [review]="movie.imdb_rating"></app-star-rating>
+      </div>
+      <div class="movie__title">
+        <h1>{{ movie.title }}</h1>
+      </div>
+      <div class="movie__info">
+        <h2>
+          {{ movie.released_on | date }} | {{ movie.length }} |
+          {{ movie.director }}
+        </h2>
+      </div>
+      <div class="movie__cast">
+        <h2>
+          Cast:
+          <span *ngFor="let actor of movie.cast; let last = last"
+            >{{ actor }}<span *ngIf="!last">, </span></span
+          >
+        </h2>
+      </div>
+      <div class="movie__genres">
+        <h3>Genres</h3>
+        <mat-chip-list>
+          <mat-chip
+            *ngFor="let genre of movie.genres"
+            [routerLink]="['/genre', genre]"
+          >
+            {{ genre }}
+          </mat-chip>
+        </mat-chip-list>
+      </div>
+      <div class="movie__description">
+        <p>
+          {{ movie.overview }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

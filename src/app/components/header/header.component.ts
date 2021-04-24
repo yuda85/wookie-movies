@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
+import { MovieService } from 'src/app/movies/movie.service';
 
 @Component({
   selector: 'app-header',
@@ -9,7 +10,11 @@ import { AuthService } from 'src/app/auth/auth.service';
 })
 export class HeaderComponent implements OnInit {
   public isUserLoggedIn: Observable<boolean> = this.authService.isUserLoggedIn();
-  constructor(private authService: AuthService) {}
+
+  constructor(
+    private authService: AuthService,
+    private movieService: MovieService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -19,5 +24,9 @@ export class HeaderComponent implements OnInit {
 
   public logout(): void {
     this.authService.signOut();
+  }
+
+  public onSearch(serchTerm: string) {
+    this.movieService.searchMovie(serchTerm);
   }
 }

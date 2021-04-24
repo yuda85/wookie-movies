@@ -1,0 +1,22 @@
+<div class="movie-slider">
+  <swiper [slidesPerView]="4.5" [spaceBetween]="50">
+    <ng-template *ngFor="let movie of movies" swiperSlide>
+      <a
+        class="movie-slider__slide"
+        [routerLink]="['/movie', movie.slug]"
+        [state]="{ id: movie.id }"
+      >
+        <img src="{{ movie.backdrop }}" alt="{{ movie.title }}" />
+        <div class="movie-slider__info info">
+          <div class="movie-slider__info__class">
+            {{ movie.classification }}
+          </div>
+          <div class="movie-slider__info__details">
+            {{ movie.title }} | {{ movie.length }} <br />
+            {{ movie.imdb_rating }} / 10
+          </div>
+        </div>
+      </a>
+    </ng-template>
+  </swiper>
+</div>

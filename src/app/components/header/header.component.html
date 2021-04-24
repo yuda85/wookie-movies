@@ -19,8 +19,15 @@
         <div class="header__search">
           <mat-form-field appearance="standard">
             <mat-label>Search Movie</mat-label>
-            <input matInput placeholder="i.e Pulp Fiction" />
-            <mat-icon matSuffix>search</mat-icon>
+            <input
+              #searchInput
+              matInput
+              placeholder="i.e Pulp Fiction"
+              (keyup.enter)="onSearch($event.target.value)"
+            />
+            <mat-icon matSuffix (click)="onSearch(searchInput.value)"
+              >search</mat-icon
+            >
           </mat-form-field>
         </div>
         <button

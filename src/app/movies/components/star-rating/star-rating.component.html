@@ -1,0 +1,7 @@
+<div class="stars">
+  <span *ngFor="let star of starsArr">
+    <i *ngIf="star === 'full'" class="icon-star-full"></i>
+    <i *ngIf="star === 'half'" class="icon-star-half"></i>
+    <i *ngIf="star === 'empty'" class="icon-star-empty"></i>
+  </span>
+</div>

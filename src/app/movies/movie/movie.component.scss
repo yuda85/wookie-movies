@@ -1,0 +1,32 @@
+.movie {
+  padding: 10px 20px;
+  &__wrap {
+    display: flex;
+    width: 100%;
+    position: relative;
+  }
+
+  &__poster {
+    flex: 1 img {
+      max-width: 100%;
+    }
+    margin-right: 2rem;
+  }
+  &__details {
+    flex: 2;
+    p {
+      font-size: 1.3rem;
+      line-height: 1.1;
+    }
+  }
+  &__genres {
+    margin-bottom: 1rem;
+  }
+
+  &__rating {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    font-size: 3rem;
+  }
+}
