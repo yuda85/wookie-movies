@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-star-rating',
@@ -7,6 +7,12 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class StarRatingComponent {
   @Input() set review(review: number) {
+    this.setStarRating(review);
+  }
+
+  public starsArr: Array<string>;
+
+  private setStarRating(review: number): void {
     const scaledReview: number = review / 2;
     const num = ~~scaledReview;
     const decimal = scaledReview % 1;
@@ -22,6 +28,4 @@ export class StarRatingComponent {
     }
     this.starsArr = this.starsArr.slice(0, 5);
   }
-
-  public starsArr: Array<string>;
 }
