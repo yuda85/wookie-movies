@@ -9,6 +9,7 @@ import { MoviesStateModel } from './movies.model';
   name: 'movies',
   defaults: {
     movies: [],
+    moviesByGenre: {},
   },
 })
 export class MoviesState {

@@ -10,7 +10,7 @@ import { IMovie } from 'src/app/models/movie.interface';
 export class MovieSliderComponent implements OnInit {
   @Input() movies: IMovie[];
 
-  constructor(private router: Router) {}
+  constructor() {}
 
   ngOnInit(): void {}
 }

@@ -101,6 +101,13 @@ export class MovieService {
       this.handleRoutingAfterSerch(movies);
     }
   }
+  public setMoviesByGenre(movies: { [key: string]: IMovie[] }) {}
+
+  public getMoviesbyGenre(
+    genre: string
+  ): Observable<{ [key: string]: IMovie[] }> {
+    return;
+  }
 
   private searchMovieOnServer(serchterm: string): Observable<IMovie[]> {
     const headers = { Authorization: 'Bearer Wookie2019' };

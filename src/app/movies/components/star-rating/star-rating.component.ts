@@ -15,8 +15,12 @@ export class StarRatingComponent {
       this.starsArr.push('half');
     }
     if (this.starsArr.length < 5) {
-      this.starsArr.push('empty');
+      const tempArr = new Array(5 - this.starsArr.length).fill('empty');
+      tempArr.forEach(() => {
+        this.starsArr.push('empty');
+      });
     }
+    this.starsArr = this.starsArr.slice(0, 5);
   }
 
   public starsArr: Array<string>;
