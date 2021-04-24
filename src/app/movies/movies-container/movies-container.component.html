@@ -1,4 +1,4 @@
-<div class="movies-container" *ngIf="!!moviesByGenre">
+<div class="movies-container" *ngIf="moviesByGenre$ | async as moviesByGenre">
   <div
     class="movies-container__slider-wrap"
     *ngFor="let genre of moviesByGenre | keyvalue"

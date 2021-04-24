@@ -128,6 +128,10 @@ export class MovieService {
     );
   }
 
+  public getGroupdMoviesbygenre(): Observable<{ [key: string]: IMovie[] }> {
+    return this.store.select(MoviesStateSelectors.moviesByGenre);
+  }
+
   private searchMovieOnServer(serchterm: string): Observable<IMovie[]> {
     const headers = { Authorization: 'Bearer Wookie2019' };
     return this.httpService.get(`${this.searchUrl}serchterm`, { headers }).pipe(
