@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { IMovie } from 'src/app/models/movie.interface';
+import { MoviesByGenres } from './../../models';
 import { MovieService } from '../movie.service';
 
 @Component({
@@ -10,8 +10,7 @@ import { MovieService } from '../movie.service';
   styleUrls: ['./movies-container.component.scss'],
 })
 export class MoviesContainerComponent implements OnInit {
-  // public moviesByGenre: { [key: string]: IMovie[] } = {};
-  public moviesByGenre$: Observable<{ [key: string]: IMovie[] }>;
+  public moviesByGenre$: Observable<MoviesByGenres>;
 
   constructor(private moviesService: MovieService) {}
 

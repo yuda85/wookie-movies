@@ -1,6 +1,6 @@
 import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IMovie } from 'src/app/models/movie.interface';
+import { IMovie } from '../../../models';
 
 @Component({
   selector: 'app-movie-slider',

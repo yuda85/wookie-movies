@@ -1,6 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
-import { MovieService } from 'src/app/movies/movie.service';
+import { Component, OnInit } from '@angular/core';
+import { MovieService } from '../../movies/movie.service';
 
 @Component({
   selector: 'app-header',

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { IMovie } from '../models/movie.interface';
 import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngxs/store';
 import { MoviesStateSelectors } from '../state/movies/movies.selectors';
@@ -11,6 +10,7 @@ import {
   SetSearchResults,
 } from '../state/movies/movies.actions';
 import { Router } from '@angular/router';
+import { MoviesByGenres, IMovie } from '../models';
 
 @Injectable({
   providedIn: 'root',
@@ -50,7 +50,7 @@ export class MovieService {
         return data['movies'];
       }),
       tap((data) => {
-        let moviesByGenre: { [key: string]: IMovie[] } = {};
+        let moviesByGenre: MoviesByGenres = {};
         this.store.dispatch(new SetMovies(data));
 
         data.forEach((movie) => {
@@ -116,7 +116,8 @@ export class MovieService {
       this.store.dispatch(new SetSearchResults(movies));
     }
   }
-  public setMoviesByGenre(movies: { [key: string]: IMovie[] }) {
+
+  public setMoviesByGenre(movies: MoviesByGenres): void {
     this.store.dispatch(new SetMoviesByGenre(movies));
   }
 
@@ -128,7 +129,7 @@ export class MovieService {
     );
   }
 
-  public getGroupdMoviesbygenre(): Observable<{ [key: string]: IMovie[] }> {
+  public getGroupdMoviesbygenre(): Observable<MoviesByGenres> {
     return this.store.select(MoviesStateSelectors.moviesByGenre);
   }
 
@@ -144,7 +145,7 @@ export class MovieService {
     );
   }
 
-  private handleRoutingAfterSerch(movies: IMovie[]) {
+  private handleRoutingAfterSerch(movies: IMovie[]): void {
     if (!movies.length) {
       this.router.navigate(['no-results']);
     } else if (movies.length > 1) {

@@ -1,5 +1,5 @@
-import { createSelector, Selector } from '@ngxs/store';
-import { IMovie } from 'src/app/models/movie.interface';
+import { Selector } from '@ngxs/store';
+import { MoviesByGenres, IMovie } from '../../models';
 import { MoviesStateModel } from './movies.model';
 import { MoviesState } from './movies.state';
 
@@ -10,7 +10,7 @@ export class MoviesStateSelectors {
   }
 
   @Selector([MoviesState])
-  static moviesByGenre(state: MoviesStateModel): { [key: string]: IMovie[] } {
+  static moviesByGenre(state: MoviesStateModel): MoviesByGenres {
     return state.moviesByGenre;
   }
 

@@ -1,7 +1,7 @@
-import { IMovie } from 'src/app/models/movie.interface';
+import { MoviesByGenres, IMovie } from '../../models';
 
 export interface MoviesStateModel {
   movies: IMovie[];
-  moviesByGenre: { [key: string]: IMovie[] };
+  moviesByGenre: MoviesByGenres;
   searchResults: IMovie[];
 }

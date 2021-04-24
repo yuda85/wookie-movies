@@ -1,4 +1,4 @@
-import { IMovie } from 'src/app/models/movie.interface';
+import { MoviesByGenres, IMovie } from '../../models';
 
 export class SetMovies {
   static readonly type = '[Movies] Set Movies';
@@ -12,5 +12,5 @@ export class SetSearchResults {
 
 export class SetMoviesByGenre {
   static readonly type = '[Movies] Set Movies By Genre';
-  constructor(public payload: { [key: string]: IMovie[] }) {}
+  constructor(public payload: MoviesByGenres) {}
 }

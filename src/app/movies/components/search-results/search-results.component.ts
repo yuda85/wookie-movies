@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { IMovie } from '../../../models/movie.interface';
+import { IMovie } from '../../../models';
 import { MovieService } from '../../movie.service';
 
 @Component({
