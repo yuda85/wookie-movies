@@ -17,8 +17,9 @@
             {{ movie.classification }}
           </div>
           <div class="movie-slider__info__details">
-            {{ movie.title }} | {{ movie.length }} <br />
-            {{ movie.imdb_rating }} / 10
+            {{ movie.title }} <br />
+            {{ movie.length }} <br />
+            <app-star-rating [review]="movie.imdb_rating"></app-star-rating>
           </div>
         </div>
       </a>
