@@ -23,10 +23,10 @@ export class MovieService {
     );
   }
 
-  public searchMovieOnServer(serchterm: string): Observable<IMovie[]> {
+  public searchMovieOnServer(searchTerm: string): Observable<IMovie[]> {
     const headers = { Authorization: 'Bearer Wookie2019' };
     return this.httpService
-      .get(`${this.searchUrl}${serchterm}`, { headers })
+      .get(`${this.searchUrl}${searchTerm}`, { headers })
       .pipe(
         filter((data) => !!data),
         map((data) => {

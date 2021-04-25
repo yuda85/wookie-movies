@@ -12,7 +12,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  public onSearch(serchTerm: string) {
-    this.moviesFacade.searchMovie(serchTerm);
+  public onSearch(searchTerm: string) {
+    this.moviesFacade.searchMovie(searchTerm);
   }
 }
