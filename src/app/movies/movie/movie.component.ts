@@ -3,7 +3,6 @@ import { ActivatedRoute, ActivationEnd, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { filter, take, tap } from 'rxjs/operators';
 import { IMovie } from '../../models';
-import { MovieService } from '../movie.service';
 import { MoviesFacadeService } from '../movies-facade.service';
 
 @Component({
@@ -21,17 +20,17 @@ export class MovieComponent implements OnInit {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private movieService: MoviesFacadeService
+    private moviesFacade: MoviesFacadeService
   ) {}
 
   ngOnInit(): void {
     this.movieId = history.state['id'];
 
     if (this.movieId) {
-      this.movie$ = this.movieService.getMovieById(this.movieId).pipe(
+      this.movie$ = this.moviesFacade.getMovieById(this.movieId).pipe(
         tap((data) => {
           if (!data) {
-            this.movieService.getMovies();
+            this.moviesFacade.getMovies();
           }
         })
       );
@@ -59,7 +58,7 @@ export class MovieComponent implements OnInit {
 
   private getMovies(): void {
     this.subscription.add(
-      this.movieService
+      this.moviesFacade
         .getMovies()
         .pipe(
           filter((data) => !!data),
@@ -70,7 +69,7 @@ export class MovieComponent implements OnInit {
   }
 
   private getMovieBySlug(): Observable<IMovie> {
-    return this.movieService.getMovieBySlug(this.movieSlug).pipe(
+    return this.moviesFacade.getMovieBySlug(this.movieSlug).pipe(
       tap((data) => {
         if (!data) {
           this.getMovies();

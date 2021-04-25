@@ -22,10 +22,6 @@ export class MovieService {
     private router: Router
   ) {}
 
-  public getMovie(id: string): Observable<IMovie> {
-    return null;
-  }
-
   public getMovies(): Observable<IMovie[]> {
     this._movies = this.store.selectSnapshot(MoviesStateSelectors.movies);
 

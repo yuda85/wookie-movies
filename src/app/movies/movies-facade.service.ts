@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { map, filter, take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { IMovie, MoviesByGenres } from '../models';
-import { SetSearchResults } from '../state/movies/movies.actions';
 import { MoviesStateSelectors } from '../state/movies/movies.selectors';
 import { MovieService } from './movie.service';
 

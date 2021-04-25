@@ -8,11 +8,11 @@ import { MovieService } from '../../movies/movie.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  constructor(private movieService: MoviesFacadeService) {}
+  constructor(private moviesFacade: MoviesFacadeService) {}
 
   ngOnInit(): void {}
 
   public onSearch(serchTerm: string) {
-    this.movieService.searchMovie(serchTerm);
+    this.moviesFacade.searchMovie(serchTerm);
   }
 }

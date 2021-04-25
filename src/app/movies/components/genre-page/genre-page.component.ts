@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { filter, take, tap } from 'rxjs/operators';
 import { IMovie } from '../../../models/movie.interface';
-import { MovieService } from '../../movie.service';
 import { MoviesFacadeService } from '../../movies-facade.service';
 
 @Component({
@@ -18,13 +17,13 @@ export class GenrePageComponent implements OnInit, OnDestroy {
   public movies$: Observable<IMovie[]>;
 
   constructor(
-    private movieService: MoviesFacadeService,
+    private moviesFacade: MoviesFacadeService,
     private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.genre = this.activatedRoute.snapshot.params.id;
-    this.movies$ = this.movieService.getMoviesbyGenre(this.genre).pipe(
+    this.movies$ = this.moviesFacade.getMoviesbyGenre(this.genre).pipe(
       tap((data) => {
         if (!data) {
           this.getMovies();
@@ -39,7 +38,7 @@ export class GenrePageComponent implements OnInit, OnDestroy {
 
   private getMovies(): void {
     this.subscription.add(
-      this.movieService
+      this.moviesFacade
         .getMovies()
         .pipe(
           filter((data) => !!data),

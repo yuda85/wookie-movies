@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { IMovie } from '../../../models';
-import { MovieService } from '../../movie.service';
 import { MoviesFacadeService } from '../../movies-facade.service';
 
 @Component({
@@ -17,12 +16,12 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   public movies$: Observable<IMovie[]>;
 
   constructor(
-    private movieService: MoviesFacadeService,
+    private moviesFacade: MoviesFacadeService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.movies$ = this.movieService.getSerchResults().pipe(
+    this.movies$ = this.moviesFacade.getSerchResults().pipe(
       tap((data) => {
         if (!data.length) {
           this.router.navigate(['no-results']);
