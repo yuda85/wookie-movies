@@ -3,6 +3,7 @@ import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IMovie, MoviesByGenres } from '../models';
+import { SearchMovies } from '../state/movies/movies.actions';
 import { MoviesStateSelectors } from '../state/movies/movies.selectors';
 import { MovieService } from './movie.service';
 
@@ -46,15 +47,11 @@ export class MoviesFacadeService {
     return this.store.select(MoviesStateSelectors.searchResults);
   }
 
-  public getMovies(): Observable<IMovie[]> {
-    return this.movieService.getMovies();
-  }
-
   public getGroupdMoviesbygenre(): Observable<MoviesByGenres> {
     return this.store.select(MoviesStateSelectors.moviesByGenre);
   }
 
   public searchMovie(text: string): void {
-    return this.movieService.searchMovie(text);
+    this.store.dispatch(new SearchMovies(text));
   }
 }

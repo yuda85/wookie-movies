@@ -27,13 +27,7 @@ export class MovieComponent implements OnInit {
     this.movieId = history.state['id'];
 
     if (this.movieId) {
-      this.movie$ = this.moviesFacade.getMovieById(this.movieId).pipe(
-        tap((data) => {
-          if (!data) {
-            this.moviesFacade.getMovies();
-          }
-        })
-      );
+      this.movie$ = this.moviesFacade.getMovieById(this.movieId);
     } else {
       this.movie$ = this.getMovieBySlug();
     }
@@ -56,25 +50,7 @@ export class MovieComponent implements OnInit {
     this.subscription.unsubscribe();
   }
 
-  private getMovies(): void {
-    this.subscription.add(
-      this.moviesFacade
-        .getMovies()
-        .pipe(
-          filter((data) => !!data),
-          take(1)
-        )
-        .subscribe()
-    );
-  }
-
   private getMovieBySlug(): Observable<IMovie> {
-    return this.moviesFacade.getMovieBySlug(this.movieSlug).pipe(
-      tap((data) => {
-        if (!data) {
-          this.getMovies();
-        }
-      })
-    );
+    return this.moviesFacade.getMovieBySlug(this.movieSlug);
   }
 }

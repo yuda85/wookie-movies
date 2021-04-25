@@ -15,8 +15,6 @@ export class MoviesContainerComponent implements OnInit {
   constructor(private moviesFacade: MoviesFacadeService) {}
 
   ngOnInit(): void {
-    this.moviesByGenre$ = this.moviesFacade
-      .getMovies()
-      .pipe(switchMap(() => this.moviesFacade.getGroupdMoviesbygenre()));
+    this.moviesByGenre$ = this.moviesFacade.getGroupdMoviesbygenre();
   }
 }

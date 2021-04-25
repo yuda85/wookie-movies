@@ -31,10 +31,8 @@ export class MovieSliderComponent implements OnInit {
         navigator.userAgent
       )
     ) {
-      // true for mobile device
       this.slidesPerView = 1;
     } else {
-      // false for not mobile device
       this.slidesPerView = 4.5;
     }
   }

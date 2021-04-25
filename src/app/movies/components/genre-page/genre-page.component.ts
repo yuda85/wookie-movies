@@ -23,28 +23,10 @@ export class GenrePageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.genre = this.activatedRoute.snapshot.params.id;
-    this.movies$ = this.moviesFacade.getMoviesbyGenre(this.genre).pipe(
-      tap((data) => {
-        if (!data) {
-          this.getMovies();
-        }
-      })
-    );
+    this.movies$ = this.moviesFacade.getMoviesbyGenre(this.genre);
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
-  }
-
-  private getMovies(): void {
-    this.subscription.add(
-      this.moviesFacade
-        .getMovies()
-        .pipe(
-          filter((data) => !!data),
-          take(1)
-        )
-        .subscribe()
-    );
   }
 }
