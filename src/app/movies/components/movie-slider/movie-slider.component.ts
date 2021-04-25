@@ -1,5 +1,12 @@
 import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { IMovie } from '../../../models';
+import SwiperCore, {
+  Navigation,
+  Pagination,
+  Scrollbar,
+  A11y,
+} from 'swiper/core';
+SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 @Component({
   selector: 'app-movie-slider',

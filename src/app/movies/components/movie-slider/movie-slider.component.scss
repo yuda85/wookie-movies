@@ -42,4 +42,13 @@
       line-height: 1.4;
     }
   }
+
+  ::ng-deep {
+    .swiper-container {
+      min-height: 15.2rem;
+      @media screen and (max-width: 991px) {
+        min-height: 12rem;
+      }
+    }
+  }
 }

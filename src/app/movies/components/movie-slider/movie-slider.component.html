@@ -2,6 +2,7 @@
   <swiper
     [slidesPerView]="slidesPerView"
     [spaceBetween]="50"
+    [pagination]="{ clickable: true }"
     [navigation]="true"
   >
     <ng-template *ngFor="let movie of movies" swiperSlide>
