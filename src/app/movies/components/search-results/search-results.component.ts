@@ -13,8 +13,6 @@ import { MovieService } from '../../movie.service';
 export class SearchResultsComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
 
-  public isLoading: boolean = true;
-
   public movies$: Observable<IMovie[]>;
 
   constructor(private movieService: MovieService, private router: Router) {}
@@ -22,7 +20,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.movies$ = this.movieService.getSerchResults().pipe(
       tap((data) => {
-        this.isLoading = false;
         if (!data.length) {
           this.router.navigate(['no-results']);
         }
