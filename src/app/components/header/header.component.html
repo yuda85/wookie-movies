@@ -2,12 +2,7 @@
   <mat-toolbar color="asscend">
     <div class="header__inner">
       <div class="header__left">
-        <button
-          mat-icon-button
-          class="example-icon"
-          aria-label="Example icon-button with menu icon"
-          [routerLink]="['/']"
-        >
+        <button mat-icon-button [routerLink]="['/']">
           <img
             class="header__logo"
             src="../../../assets/images/wookie.webp"
@@ -26,7 +21,10 @@
               placeholder="i.e Pulp Fiction"
               (keyup.enter)="onSearch($event.target.value)"
             />
-            <mat-icon matSuffix (click)="onSearch(searchInput.value)"
+            <mat-icon
+              class="header__mag-glass"
+              matSuffix
+              (click)="onSearch(searchInput.value)"
               >search</mat-icon
             >
           </mat-form-field>

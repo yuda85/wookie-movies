@@ -5,6 +5,11 @@
     justify-content: space-between;
     width: 100%;
   }
+
+  &__mag-glass {
+    cursor: pointer;
+  }
+
   &__right {
     display: flex;
     align-items: center;
