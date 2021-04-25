@@ -61,8 +61,13 @@ export class MoviesState {
           })
         )
         .subscribe((data) => {
-          ctx.patchState({ searchResults: data });
-          this.handleRoutingAfterSerch(data);
+          if (!!data) {
+            ctx.patchState({ searchResults: data });
+            this.handleRoutingAfterSerch(data);
+          } else {
+            ctx.patchState({ searchResults: [] });
+            this.handleRoutingAfterSerch([]);
+          }
         });
     } else {
       ctx.patchState({ searchResults: foundMovies });
@@ -89,7 +94,7 @@ export class MoviesState {
   }
 
   private handleRoutingAfterSerch(movies: IMovie[]): void {
-    if (!movies.length) {
+    if (!movies && !movies.length) {
       this.router.navigate(['no-results']);
     } else {
       this.router.navigate(['results']);
