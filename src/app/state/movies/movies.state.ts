@@ -22,17 +22,13 @@ export class MoviesState {
 
   ngxsOnInit(ctx: StateContext<MoviesStateModel>) {
     this.movieService.fetchMovies().subscribe((data) => {
-      ctx.patchState({ movies: data });
-      let moviesByGenre: MoviesByGenres = this.mapMoviesToGenres(data);
-      ctx.patchState({ moviesByGenre: moviesByGenre });
+      this.handleAddedMovies(ctx, data);
     });
   }
 
   @Action(SetMovies)
   setMovies(ctx: StateContext<MoviesStateModel>, action: SetMovies) {
-    ctx.patchState({ movies: action.payload });
-    let moviesByGenre: MoviesByGenres = this.mapMoviesToGenres(action.payload);
-    ctx.patchState({ moviesByGenre: moviesByGenre });
+    this.handleAddedMovies(ctx, action.payload);
   }
 
   @Action(SetSearchResults)
@@ -51,7 +47,7 @@ export class MoviesState {
     const foundMovies = movies.filter((movie) => {
       const term = searchTerm.toLowerCase();
       const name = movie.title.toLocaleLowerCase();
-      return name.includes(searchTerm);
+      return name.includes(term);
     });
 
     if (!foundMovies.length) {
@@ -74,7 +70,10 @@ export class MoviesState {
     }
   }
 
-  private mapMoviesToGenres(movies: IMovie[]): MoviesByGenres {
+  private mapMoviesToGenres(
+    movies: IMovie[],
+    ctx: StateContext<MoviesStateModel>
+  ): void {
     let moviesByGenre: MoviesByGenres = {};
     movies.forEach((movie) => {
       movie.genres.forEach((genre) => {
@@ -86,7 +85,7 @@ export class MoviesState {
       });
     });
 
-    return moviesByGenre;
+    ctx.patchState({ moviesByGenre: moviesByGenre });
   }
 
   private handleRoutingAfterSerch(movies: IMovie[]): void {
@@ -95,5 +94,13 @@ export class MoviesState {
     } else {
       this.router.navigate(['results']);
     }
+  }
+
+  private handleAddedMovies(
+    ctx: StateContext<MoviesStateModel>,
+    movies: IMovie[]
+  ): void {
+    ctx.patchState({ movies: movies });
+    this.mapMoviesToGenres(movies, ctx);
   }
 }

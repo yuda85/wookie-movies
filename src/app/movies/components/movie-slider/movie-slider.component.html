@@ -1,5 +1,9 @@
 <div class="movie-slider">
-  <swiper [slidesPerView]="slidesPerView" [spaceBetween]="50">
+  <swiper
+    [slidesPerView]="slidesPerView"
+    [spaceBetween]="50"
+    [navigation]="true"
+  >
     <ng-template *ngFor="let movie of movies" swiperSlide>
       <a
         class="movie-slider__slide"
