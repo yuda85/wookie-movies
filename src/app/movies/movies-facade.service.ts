@@ -36,20 +36,20 @@ export class MoviesFacadeService {
     );
   }
 
-  public getSerchResults(): Observable<IMovie[]> {
-    return this.store.select(MoviesStateSelectors.searchResults);
-  }
-
-  public getMovies(): Observable<IMovie[]> {
-    return this.movieService.getMovies();
-  }
-
   public getMoviesbyGenre(genre: string): Observable<IMovie[]> {
     return this.store.select(MoviesStateSelectors.moviesByGenre).pipe(
       map((data) => {
         return data[genre];
       })
     );
+  }
+
+  public getSerchResults(): Observable<IMovie[]> {
+    return this.store.select(MoviesStateSelectors.searchResults);
+  }
+
+  public getMovies(): Observable<IMovie[]> {
+    return this.movieService.getMovies();
   }
 
   public getGroupdMoviesbygenre(): Observable<MoviesByGenres> {

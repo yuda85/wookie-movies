@@ -90,10 +90,8 @@ export class MovieService {
   private handleRoutingAfterSerch(movies: IMovie[]): void {
     if (!movies.length) {
       this.router.navigate(['no-results']);
-    } else if (movies.length > 1) {
-      this.router.navigate(['results']);
     } else {
-      this.router.navigate(['movie', movies[0].slug]);
+      this.router.navigate(['results']);
     }
   }
 }
