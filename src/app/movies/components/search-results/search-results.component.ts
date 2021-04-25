@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { IMovie } from '../../../models';
@@ -13,21 +13,24 @@ import { MoviesFacadeService } from '../../movies-facade.service';
 export class SearchResultsComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
 
+  public searchTerm: string;
   public movies$: Observable<IMovie[]>;
 
   constructor(
     private moviesFacade: MoviesFacadeService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.movies$ = this.moviesFacade.getSerchResults().pipe(
-      tap((data) => {
-        if (!data.length) {
-          this.router.navigate(['no-results']);
-        }
+    this.subscription.add(
+      this.activatedRoute.queryParams.subscribe((data) => {
+        this.searchTerm = data.term;
+        this.moviesFacade.searchMovie(this.searchTerm);
       })
     );
+
+    this.movies$ = this.moviesFacade.getSerchResults();
   }
 
   ngOnDestroy(): void {

@@ -1,4 +1,10 @@
 <div class="search-results" *ngIf="movies$ | async as movies">
-  <h1>Search</h1>
-  <app-movie-slider [movies]="movies"></app-movie-slider>
+  <div class="search-results__slider" *ngIf="movies.length; else noResults">
+    <h1>Search: {{ searchTerm }}</h1>
+    <app-movie-slider [movies]="movies"></app-movie-slider>
+  </div>
+
+  <ng-template #noResults>
+    <app-no-results></app-no-results>
+  </ng-template>
 </div>

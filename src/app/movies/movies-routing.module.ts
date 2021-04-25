@@ -14,12 +14,12 @@ const routes: Routes = [
     path: 'genre/:id',
     component: GenrePageComponent,
   },
+  // {
+  //   path: 'no-results',
+  //   component: NoResultsComponent,
+  // },
   {
-    path: 'no-results',
-    component: NoResultsComponent,
-  },
-  {
-    path: 'results',
+    path: 'search',
     component: SearchResultsComponent,
   },
 ];

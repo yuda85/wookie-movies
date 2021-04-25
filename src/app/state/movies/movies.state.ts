@@ -42,10 +42,10 @@ export class MoviesState {
   @Action(SearchMovies)
   searchMovies(ctx: StateContext<MoviesStateModel>, action: SearchMovies) {
     const searchTerm = action.payload;
+    const term = action.payload.toLowerCase();
     const movies = ctx.getState().movies;
 
     const foundMovies = movies.filter((movie) => {
-      const term = searchTerm.toLowerCase();
       const name = movie.title.toLocaleLowerCase();
       return name.includes(term);
     });
@@ -66,11 +66,11 @@ export class MoviesState {
         )
         .subscribe((data) => {
           ctx.patchState({ searchResults: data });
-          this.handleRoutingAfterSerch(data);
+          this.handleRoutingAfterSerch(data, term);
         });
     } else {
       ctx.patchState({ searchResults: foundMovies });
-      this.handleRoutingAfterSerch(foundMovies);
+      this.handleRoutingAfterSerch(foundMovies, term);
     }
   }
 
@@ -92,12 +92,8 @@ export class MoviesState {
     ctx.patchState({ moviesByGenre: moviesByGenre });
   }
 
-  private handleRoutingAfterSerch(movies: IMovie[]): void {
-    if (!movies.length) {
-      this.router.navigate(['no-results']);
-    } else {
-      this.router.navigate(['results']);
-    }
+  private handleRoutingAfterSerch(movies: IMovie[], searchTerm: string): void {
+    this.router.navigate(['search'], { queryParams: { term: searchTerm } });
   }
 
   private handleAddedMovies(

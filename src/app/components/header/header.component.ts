@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MoviesFacadeService } from 'src/app/movies/movies-facade.service';
 import { MovieService } from '../../movies/movie.service';
 
@@ -8,11 +9,11 @@ import { MovieService } from '../../movies/movie.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  constructor(private moviesFacade: MoviesFacadeService) {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
 
   public onSearch(searchTerm: string) {
-    this.moviesFacade.searchMovie(searchTerm);
+    this.router.navigate(['search'], { queryParams: { term: searchTerm } });
   }
 }
