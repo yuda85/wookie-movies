@@ -1,16 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngxs/store';
 import { MoviesStateSelectors } from '../state/movies/movies.selectors';
 import { filter, map, take, tap } from 'rxjs/operators';
-import {
-  SetMovies,
-  SetMoviesByGenre,
-  SetSearchResults,
-} from '../state/movies/movies.actions';
+import { SetMovies, SetSearchResults } from '../state/movies/movies.actions';
 import { Router } from '@angular/router';
-import { MoviesByGenres, IMovie } from '../models';
+import { IMovie } from '../models';
 
 @Injectable({
   providedIn: 'root',
@@ -19,8 +15,6 @@ export class MovieService {
   private _movies: IMovie[];
   private mainUrl: string = 'https://wookie.codesubmit.io/movies';
   private searchUrl: string = 'https://wookie.codesubmit.io/movies?q=';
-
-  private searchSubject$: Subject<IMovie[]> = new Subject();
 
   constructor(
     private httpService: HttpClient,
@@ -40,57 +34,6 @@ export class MovieService {
     } else {
       return this.store.select(MoviesStateSelectors.movies);
     }
-  }
-
-  public fetchMovies(): Observable<any> {
-    const headers = { Authorization: 'Bearer Wookie2019' };
-    return this.httpService.get(this.mainUrl, { headers }).pipe(
-      filter((data) => !!data),
-      map((data) => {
-        return data['movies'];
-      }),
-      tap((data) => {
-        let moviesByGenre: MoviesByGenres = {};
-        this.store.dispatch(new SetMovies(data));
-
-        data.forEach((movie) => {
-          movie.genres.forEach((genre) => {
-            if (moviesByGenre[genre] && moviesByGenre[genre].length) {
-              moviesByGenre[genre].push(movie);
-            } else {
-              moviesByGenre[genre] = [movie];
-            }
-          });
-        });
-        this.setMoviesByGenre(moviesByGenre);
-      })
-    );
-  }
-
-  public getMovieBySlug(slug: string): Observable<IMovie> {
-    return this.store.select(MoviesStateSelectors.movies).pipe(
-      map((movies) => {
-        const movie = movies.find((movie) => {
-          return movie.slug === slug;
-        });
-        return movie;
-      })
-    );
-  }
-
-  public getMovieById(movieId: string): Observable<IMovie> {
-    return this.store.select(MoviesStateSelectors.movies).pipe(
-      map((movies) => {
-        const movie = movies.find((movie) => {
-          return movie.id === movieId;
-        });
-        return movie;
-      })
-    );
-  }
-
-  public getSerchResults(): Observable<IMovie[]> {
-    return this.store.select(MoviesStateSelectors.searchResults);
   }
 
   public searchMovie(text: string): void {
@@ -117,32 +60,31 @@ export class MovieService {
     }
   }
 
-  public setMoviesByGenre(movies: MoviesByGenres): void {
-    this.store.dispatch(new SetMoviesByGenre(movies));
-  }
-
-  public getMoviesbyGenre(genre: string): Observable<IMovie[]> {
-    return this.store.select(MoviesStateSelectors.moviesByGenre).pipe(
+  private fetchMovies(): Observable<IMovie[]> {
+    const headers = { Authorization: 'Bearer Wookie2019' };
+    return this.httpService.get(this.mainUrl, { headers }).pipe(
+      filter((data) => !!data),
       map((data) => {
-        return data[genre];
+        return data['movies'];
+      }),
+      tap((data) => {
+        this.store.dispatch(new SetMovies(data));
       })
     );
-  }
-
-  public getGroupdMoviesbygenre(): Observable<MoviesByGenres> {
-    return this.store.select(MoviesStateSelectors.moviesByGenre);
   }
 
   private searchMovieOnServer(serchterm: string): Observable<IMovie[]> {
     const headers = { Authorization: 'Bearer Wookie2019' };
-    return this.httpService.get(`${this.searchUrl}serchterm`, { headers }).pipe(
-      filter((data) => !!data),
-      map((data) => {
-        if (!data['movies']) {
-        }
-        return data['movies'];
-      })
-    );
+    return this.httpService
+      .get(`${this.searchUrl}${serchterm}`, { headers })
+      .pipe(
+        filter((data) => !!data),
+        map((data) => {
+          if (!data['movies']) {
+          }
+          return data['movies'];
+        })
+      );
   }
 
   private handleRoutingAfterSerch(movies: IMovie[]): void {

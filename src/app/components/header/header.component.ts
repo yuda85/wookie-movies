@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MoviesFacadeService } from 'src/app/movies/movies-facade.service';
 import { MovieService } from '../../movies/movie.service';
 
 @Component({
@@ -7,7 +8,7 @@ import { MovieService } from '../../movies/movie.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  constructor(private movieService: MovieService) {}
+  constructor(private movieService: MoviesFacadeService) {}
 
   ngOnInit(): void {}
 

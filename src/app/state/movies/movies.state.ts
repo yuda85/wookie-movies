@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { State, StateContext, Action } from '@ngxs/store';
-import {
-  SetMovies,
-  SetMoviesByGenre,
-  SetSearchResults,
-} from './movies.actions';
+import { MoviesByGenres } from 'src/app/models';
+import { SetMovies, SetSearchResults } from './movies.actions';
 import { MoviesStateModel } from './movies.model';
 @Injectable({
   providedIn: 'root',
@@ -21,14 +18,17 @@ export class MoviesState {
   @Action(SetMovies)
   setMovies(ctx: StateContext<MoviesStateModel>, action: SetMovies) {
     ctx.patchState({ movies: action.payload });
-  }
-
-  @Action(SetMoviesByGenre)
-  setMoviesByGenre(
-    ctx: StateContext<MoviesStateModel>,
-    action: SetMoviesByGenre
-  ) {
-    ctx.patchState({ moviesByGenre: action.payload });
+    let moviesByGenre: MoviesByGenres = {};
+    action.payload.forEach((movie) => {
+      movie.genres.forEach((genre) => {
+        if (moviesByGenre[genre] && moviesByGenre[genre].length) {
+          moviesByGenre[genre].push(movie);
+        } else {
+          moviesByGenre[genre] = [movie];
+        }
+      });
+    });
+    ctx.patchState({ moviesByGenre: moviesByGenre });
   }
 
   @Action(SetSearchResults)

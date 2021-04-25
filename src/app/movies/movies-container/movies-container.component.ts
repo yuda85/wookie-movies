@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { MoviesByGenres } from './../../models';
 import { MovieService } from '../movie.service';
+import { MoviesFacadeService } from '../movies-facade.service';
 
 @Component({
   selector: 'app-movies-container',
@@ -12,7 +13,7 @@ import { MovieService } from '../movie.service';
 export class MoviesContainerComponent implements OnInit {
   public moviesByGenre$: Observable<MoviesByGenres>;
 
-  constructor(private moviesService: MovieService) {}
+  constructor(private moviesService: MoviesFacadeService) {}
 
   ngOnInit(): void {
     this.moviesByGenre$ = this.moviesService

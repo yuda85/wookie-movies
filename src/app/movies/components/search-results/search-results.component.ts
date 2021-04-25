@@ -4,6 +4,7 @@ import { Observable, Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { IMovie } from '../../../models';
 import { MovieService } from '../../movie.service';
+import { MoviesFacadeService } from '../../movies-facade.service';
 
 @Component({
   selector: 'app-search-results',
@@ -15,7 +16,10 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
   public movies$: Observable<IMovie[]>;
 
-  constructor(private movieService: MovieService, private router: Router) {}
+  constructor(
+    private movieService: MoviesFacadeService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.movies$ = this.movieService.getSerchResults().pipe(

@@ -4,6 +4,7 @@ import { Observable, Subscription } from 'rxjs';
 import { filter, take, tap } from 'rxjs/operators';
 import { IMovie } from '../../../models/movie.interface';
 import { MovieService } from '../../movie.service';
+import { MoviesFacadeService } from '../../movies-facade.service';
 
 @Component({
   selector: 'app-genre-page',
@@ -17,7 +18,7 @@ export class GenrePageComponent implements OnInit, OnDestroy {
   public movies$: Observable<IMovie[]>;
 
   constructor(
-    private movieService: MovieService,
+    private movieService: MoviesFacadeService,
     private activatedRoute: ActivatedRoute
   ) {}
 
@@ -39,7 +40,7 @@ export class GenrePageComponent implements OnInit, OnDestroy {
   private fetchMovies(): void {
     this.subscription.add(
       this.movieService
-        .fetchMovies()
+        .getMovies()
         .pipe(
           filter((data) => !!data),
           take(1)
