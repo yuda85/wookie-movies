@@ -11,7 +11,7 @@ import { MovieService } from './movie.service';
   providedIn: 'root',
 })
 export class MoviesFacadeService {
-  constructor(private store: Store, private movieService: MovieService) {}
+  constructor(private store: Store) {}
 
   public getMovieBySlug(slug: string): Observable<IMovie> {
     return this.store.select(MoviesStateSelectors.movies).pipe(
