@@ -57,7 +57,7 @@ export class MovieComponent implements OnInit {
     this.subscription.unsubscribe();
   }
 
-  private fetchMovies(): void {
+  private getMovies(): void {
     this.subscription.add(
       this.movieService
         .getMovies()
@@ -73,7 +73,7 @@ export class MovieComponent implements OnInit {
     return this.movieService.getMovieBySlug(this.movieSlug).pipe(
       tap((data) => {
         if (!data) {
-          this.fetchMovies();
+          this.getMovies();
         }
       })
     );

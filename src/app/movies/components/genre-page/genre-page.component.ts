@@ -27,7 +27,7 @@ export class GenrePageComponent implements OnInit, OnDestroy {
     this.movies$ = this.movieService.getMoviesbyGenre(this.genre).pipe(
       tap((data) => {
         if (!data) {
-          this.fetchMovies();
+          this.getMovies();
         }
       })
     );
@@ -37,7 +37,7 @@ export class GenrePageComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  private fetchMovies(): void {
+  private getMovies(): void {
     this.subscription.add(
       this.movieService
         .getMovies()
